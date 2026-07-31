@@ -42,8 +42,19 @@ export function QrScanner() {
             }
             handledRef.current = true;
             setErrorMessage(null);
-            scanner.stop().catch(() => undefined);
-            router.push(`/checkin/${token}`);
+            // scanner.clear() がDOMを直接操作するため、Reactがページ遷移でこのコンポーネントを
+            // アンマウントする前に完了させておく（順序が逆になるとDOM操作が競合してクラッシュする）。
+            scanner
+              .stop()
+              .catch(() => undefined)
+              .finally(() => {
+                try {
+                  scanner.clear();
+                } catch {
+                  // クリア処理の失敗は致命的ではないため無視する
+                }
+                router.push(`/checkin/${token}`);
+              });
           },
           () => {
             // フレームごとの読み取り失敗は無視する（連続スキャン中の正常な挙動）
@@ -68,9 +79,16 @@ export function QrScanner() {
       cancelled = true;
       const scanner = scannerRef.current;
       if (scanner) {
-        scanner.stop().catch(() => undefined).finally(() => {
-          scanner.clear();
-        });
+        scanner
+          .stop()
+          .catch(() => undefined)
+          .finally(() => {
+            try {
+              scanner.clear();
+            } catch {
+              // クリア処理の失敗は致命的ではないため無視する
+            }
+          });
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
