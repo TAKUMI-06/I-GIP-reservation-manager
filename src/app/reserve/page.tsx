@@ -42,6 +42,8 @@ export default async function ReservePage() {
               <CardTitle className="text-xl">来場予約</CardTitle>
               <CardDescription>
                 利用可能な日程から選択し、必要事項をご入力ください。予約は即時確定します。
+                <br />
+                利用時間: 10:00〜17:00
               </CardDescription>
             </CardHeader>
             <CardContent>

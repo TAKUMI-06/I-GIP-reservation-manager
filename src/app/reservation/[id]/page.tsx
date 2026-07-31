@@ -78,6 +78,9 @@ export default async function ReservationDetailPage({ params }: PageProps) {
                   {formatJst(reservation.visit_date, "yyyy年M月d日(E)")}
                 </dd>
 
+                <dt className="text-muted-foreground">利用時間</dt>
+                <dd className="col-span-2">10:00〜17:00</dd>
+
                 <dt className="text-muted-foreground">氏名</dt>
                 <dd className="col-span-2">{reservation.name}</dd>
 

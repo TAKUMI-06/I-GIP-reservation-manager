@@ -74,7 +74,11 @@ export default async function ReservationCompletePage({ searchParams }: PageProp
                 <CardTitle className="text-lg">
                   {formatJst(reservation.visit_date, "yyyy年M月d日(E)")}
                 </CardTitle>
-                <CardDescription>{reservation.team_name} / {reservation.name}</CardDescription>
+                <CardDescription>
+                  {reservation.team_name} / {reservation.name}
+                  <br />
+                  利用時間: 10:00〜17:00
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex flex-col items-center gap-3 rounded-xl border border-border bg-white p-6">
