@@ -1,16 +1,29 @@
 import "server-only";
-import { Resend } from "resend";
+import nodemailer, { type Transporter } from "nodemailer";
 
-let cached: Resend | null = null;
+let cached: Transporter | null = null;
 
-/** Resendクライアントを取得する（APIキー未設定時はnullを返し、呼び出し側でハンドリングする） */
-export function getResendClient(): Resend | null {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return null;
-  if (!cached) cached = new Resend(apiKey);
+/**
+ * Gmail SMTP経由のメール送信クライアントを取得する。
+ * GMAIL_USER / GMAIL_APP_PASSWORD 未設定時はnullを返し、呼び出し側でハンドリングする。
+ * GMAIL_APP_PASSWORD は Google アカウントの「アプリ パスワード」（2段階認証必須）。
+ */
+export function getMailTransport(): Transporter | null {
+  const user = process.env.GMAIL_USER;
+  const pass = process.env.GMAIL_APP_PASSWORD;
+  if (!user || !pass) return null;
+  if (!cached) {
+    cached = nodemailer.createTransport({
+      service: "gmail",
+      auth: { user, pass },
+    });
+  }
   return cached;
 }
 
 export function getFromAddress(): string {
-  return process.env.RESEND_FROM_EMAIL ?? "i-GIP 入館管理 <no-reply@example.jp>";
+  const user = process.env.GMAIL_USER ?? "no-reply@example.com";
+  return process.env.MAIL_FROM_NAME
+    ? `${process.env.MAIL_FROM_NAME} <${user}>`
+    : `i-GIP 入館管理 <${user}>`;
 }

@@ -4,7 +4,9 @@ import { z } from "zod";
 const phoneRegex = /^[0-9-]{9,15}$/;
 
 export const reservationFormSchema = z.object({
-  availableDateId: z.string().uuid({ message: "利用日を選択してください。" }),
+  availableDateIds: z
+    .array(z.string().uuid())
+    .min(1, { message: "利用日を1つ以上選択してください。" }),
   name: z
     .string()
     .trim()

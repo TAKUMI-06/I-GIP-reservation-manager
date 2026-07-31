@@ -1,5 +1,5 @@
 import "server-only";
-import { getResendClient, getFromAddress } from "@/lib/email/client";
+import { getMailTransport, getFromAddress } from "@/lib/email/client";
 import {
   buildReservationConfirmationEmail,
   buildReminderEmail,
@@ -12,24 +12,20 @@ export interface EmailSendResult {
 }
 
 async function send(to: string | string[], subject: string, html: string): Promise<EmailSendResult> {
-  const resend = getResendClient();
-  if (!resend) {
-    const message = "RESEND_API_KEY が設定されていないため、メール送信をスキップしました。";
+  const transport = getMailTransport();
+  if (!transport) {
+    const message = "GMAIL_USER / GMAIL_APP_PASSWORD が設定されていないため、メール送信をスキップしました。";
     console.warn(`[email] ${message}`, { to, subject });
     return { success: false, error: message };
   }
 
   try {
-    const { error } = await resend.emails.send({
+    await transport.sendMail({
       from: getFromAddress(),
       to,
       subject,
       html,
     });
-    if (error) {
-      console.error("[email] Resend送信エラー:", error);
-      return { success: false, error: error.message };
-    }
     return { success: true };
   } catch (err) {
     const message = err instanceof Error ? err.message : "不明なエラー";

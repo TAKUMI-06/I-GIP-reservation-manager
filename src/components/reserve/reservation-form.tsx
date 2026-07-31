@@ -13,13 +13,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Form,
   FormControl,
   FormField,
@@ -41,7 +34,7 @@ export function ReservationForm({ availableDates }: ReservationFormProps) {
   const form = useForm<ReservationFormValues>({
     resolver: zodResolver(reservationFormSchema),
     defaultValues: {
-      availableDateId: "",
+      availableDateIds: [],
       name: "",
       teamName: "",
       email: "",
@@ -54,13 +47,17 @@ export function ReservationForm({ availableDates }: ReservationFormProps) {
     setSubmitting(true);
     try {
       const result = await createReservation(values);
-      if (!result.success || !result.reservationId) {
+      if (!result.success || !result.reservationIds || result.reservationIds.length === 0) {
         toast.error(result.error ?? "予約に失敗しました。");
         setSubmitting(false);
         return;
       }
-      toast.success("予約が完了しました。");
-      router.push(`/reservation/${result.reservationId}`);
+      toast.success(
+        result.reservationIds.length > 1
+          ? `${result.reservationIds.length}件の予約が完了しました。`
+          : "予約が完了しました。",
+      );
+      router.push(`/reservation/complete?ids=${result.reservationIds.join(",")}`);
     } catch (err) {
       console.error(err);
       toast.error("通信エラーが発生しました。ネットワーク状況をご確認の上、再度お試しください。");
@@ -73,25 +70,40 @@ export function ReservationForm({ availableDates }: ReservationFormProps) {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         <FormField
           control={form.control}
-          name="availableDateId"
+          name="availableDateIds"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>利用日</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="利用日を選択してください" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {availableDates.map((d) => (
-                    <SelectItem key={d.id} value={d.id}>
-                      {formatJst(d.date, "yyyy年M月d日(E)")}
-                      {d.note ? `（${d.note}）` : ""}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <FormLabel>利用日（複数選択可）</FormLabel>
+              <div className="space-y-2 rounded-lg border border-border p-3">
+                {availableDates.map((d) => {
+                  const checked = field.value?.includes(d.id) ?? false;
+                  return (
+                    <label
+                      key={d.id}
+                      className="flex items-center gap-3 rounded-md px-2 py-1.5 hover:bg-secondary/40"
+                    >
+                      <Checkbox
+                        checked={checked}
+                        onCheckedChange={(v) => {
+                          const current = field.value ?? [];
+                          field.onChange(
+                            v === true
+                              ? [...current, d.id]
+                              : current.filter((id) => id !== d.id),
+                          );
+                        }}
+                      />
+                      <span className="text-sm">
+                        {formatJst(d.date, "yyyy年M月d日(E)")}
+                        {d.note ? `（${d.note}）` : ""}
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                選択した日程ごとに個別の予約とQRコードが発行されます。
+              </p>
               <FormMessage />
             </FormItem>
           )}
