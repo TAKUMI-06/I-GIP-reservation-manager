@@ -22,6 +22,21 @@ export const addAdminUserSchema = z.object({
     .max(72, "パスワードは72文字以内にしてください。"),
 });
 
+export const resetPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, "パスワードは8文字以上にしてください。")
+      .max(72, "パスワードは72文字以内にしてください。"),
+    confirmPassword: z.string().min(1, "確認用パスワードを入力してください。"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "パスワードが一致しません。",
+    path: ["confirmPassword"],
+  });
+
+export type ResetPasswordValues = z.infer<typeof resetPasswordSchema>;
+
 export const updateNotificationSettingsSchema = z.object({
   adminNotificationEmails: z
     .array(z.string().trim().email("メールアドレスの形式が正しくありません。"))
