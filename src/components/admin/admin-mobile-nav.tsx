@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Menu, LogOut, QrCode } from "lucide-react";
+import { Menu, LogOut, QrCode, ExternalLink } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -48,6 +48,13 @@ export function AdminMobileNav({ role }: { role: AdminRole }) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuItem asChild>
+            <Link href="/" target="_blank" rel="noopener noreferrer">
+              <ExternalLink className="h-4 w-4" />
+              利用者画面を見る
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
           {visible.map((item) => (
             <DropdownMenuItem key={item.href} asChild>
               <Link href={item.href}>{item.label}</Link>

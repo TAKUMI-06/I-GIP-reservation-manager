@@ -11,6 +11,7 @@ import {
   Settings,
   LogOut,
   QrCode,
+  ExternalLink,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -52,6 +53,18 @@ export function AdminSidebar({ role, name }: { role: AdminRole; name: string }) 
           <QrCode className="h-4 w-4" />
         </span>
         i-GIP 管理画面
+      </div>
+
+      <div className="px-3 pt-3">
+        <Link
+          href="/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 rounded-lg border border-border/60 px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+        >
+          <ExternalLink className="h-4 w-4" />
+          利用者画面を見る
+        </Link>
       </div>
 
       <nav className="flex-1 space-y-1 p-3">
