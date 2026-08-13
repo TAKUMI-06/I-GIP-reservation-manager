@@ -12,7 +12,15 @@ import { checkInByToken } from "@/lib/actions/checkin";
 import { formatJst } from "@/lib/date";
 import type { ReservationRow } from "@/lib/types/database";
 
-export function CheckinPanel({ reservation, token }: { reservation: ReservationRow; token: string }) {
+export function CheckinPanel({
+  reservation,
+  token,
+  hidePhone = false,
+}: {
+  reservation: ReservationRow;
+  token: string;
+  hidePhone?: boolean;
+}) {
   const router = useRouter();
   const [current, setCurrent] = React.useState(reservation);
   const [submitting, setSubmitting] = React.useState(false);
@@ -55,8 +63,12 @@ export function CheckinPanel({ reservation, token }: { reservation: ReservationR
         <dt className="text-muted-foreground">メール</dt>
         <dd className="col-span-2 break-all">{current.email}</dd>
 
-        <dt className="text-muted-foreground">電話番号</dt>
-        <dd className="col-span-2">{current.phone}</dd>
+        {!hidePhone && (
+          <>
+            <dt className="text-muted-foreground">電話番号</dt>
+            <dd className="col-span-2">{current.phone}</dd>
+          </>
+        )}
 
         <dt className="text-muted-foreground">状態</dt>
         <dd className="col-span-2">

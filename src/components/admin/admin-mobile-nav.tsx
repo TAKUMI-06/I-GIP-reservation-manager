@@ -15,10 +15,10 @@ import { logoutAdmin } from "@/app/admin/login/actions";
 import type { AdminRole } from "@/lib/types/database";
 
 const items: { href: string; label: string; roles: AdminRole[] }[] = [
-  { href: "/admin", label: "ダッシュボード", roles: ["super_admin", "staff"] },
-  { href: "/admin/scanner", label: "QR受付", roles: ["super_admin", "staff"] },
-  { href: "/admin/reservations", label: "予約一覧", roles: ["super_admin", "staff"] },
-  { href: "/admin/history", label: "入館履歴", roles: ["super_admin", "staff"] },
+  { href: "/admin", label: "ダッシュボード", roles: ["super_admin", "staff", "sub_admin"] },
+  { href: "/admin/scanner", label: "QR受付", roles: ["super_admin", "staff", "sub_admin"] },
+  { href: "/admin/reservations", label: "予約一覧", roles: ["super_admin", "staff", "sub_admin"] },
+  { href: "/admin/history", label: "入館履歴", roles: ["super_admin", "staff", "sub_admin"] },
   { href: "/admin/dates", label: "利用可能日管理", roles: ["super_admin"] },
   { href: "/admin/settings", label: "設定", roles: ["super_admin"] },
 ];

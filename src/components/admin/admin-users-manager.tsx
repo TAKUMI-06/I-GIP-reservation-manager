@@ -35,7 +35,7 @@ import {
 import { formatJst } from "@/lib/date";
 import type { AdminUserRow } from "@/lib/types/database";
 
-type FormValues = { name: string; email: string; role: "super_admin" | "staff"; password: string };
+type FormValues = { name: string; email: string; role: "super_admin" | "staff" | "sub_admin"; password: string };
 
 export function AdminUsersManager({
   adminUsers,
@@ -125,6 +125,7 @@ export function AdminUsersManager({
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="staff">受付担当</SelectItem>
+                    <SelectItem value="sub_admin">サブ管理者</SelectItem>
                     <SelectItem value="super_admin">スーパー管理者</SelectItem>
                   </SelectContent>
                 </Select>
@@ -179,6 +180,8 @@ export function AdminUsersManager({
               <TableCell>
                 {admin.role === "super_admin" ? (
                   <Badge>スーパー管理者</Badge>
+                ) : admin.role === "sub_admin" ? (
+                  <Badge variant="outline">サブ管理者</Badge>
                 ) : (
                   <Badge variant="secondary">受付担当</Badge>
                 )}

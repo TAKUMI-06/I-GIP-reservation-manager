@@ -9,7 +9,7 @@ export const DATA_RETENTION_DAYS = 92;
 export const QR_TOKEN_BYTES = 32;
 
 // 管理者ロール
-export const ADMIN_ROLES = ["super_admin", "staff"] as const;
+export const ADMIN_ROLES = ["super_admin", "staff", "sub_admin"] as const;
 export type AdminRole = (typeof ADMIN_ROLES)[number];
 
 // 予約ステータス

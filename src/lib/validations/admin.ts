@@ -15,7 +15,7 @@ export const addAvailableDateSchema = z.object({
 export const addAdminUserSchema = z.object({
   name: z.string().trim().min(1, "氏名を入力してください。").max(100),
   email: z.string().trim().min(1, "メールアドレスを入力してください。").email(),
-  role: z.enum(["super_admin", "staff"]),
+  role: z.enum(["super_admin", "staff", "sub_admin"]),
   password: z
     .string()
     .min(8, "パスワードは8文字以上にしてください。")

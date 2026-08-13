@@ -4,7 +4,7 @@
  * スキーマ変更時は supabase/migrations と本ファイルを必ず同期させること。
  */
 
-export type AdminRole = "super_admin" | "staff";
+export type AdminRole = "super_admin" | "staff" | "sub_admin";
 export type ReservationStatus = "not_checked_in" | "checked_in";
 export type CheckinMethod = "qr" | "manual";
 

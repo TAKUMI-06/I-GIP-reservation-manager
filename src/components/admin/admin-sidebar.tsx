@@ -26,10 +26,10 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { href: "/admin", label: "ダッシュボード", icon: LayoutDashboard, roles: ["super_admin", "staff"] },
-  { href: "/admin/scanner", label: "QR受付", icon: ScanLine, roles: ["super_admin", "staff"] },
-  { href: "/admin/reservations", label: "予約一覧", icon: ClipboardList, roles: ["super_admin", "staff"] },
-  { href: "/admin/history", label: "入館履歴", icon: History, roles: ["super_admin", "staff"] },
+  { href: "/admin", label: "ダッシュボード", icon: LayoutDashboard, roles: ["super_admin", "staff", "sub_admin"] },
+  { href: "/admin/scanner", label: "QR受付", icon: ScanLine, roles: ["super_admin", "staff", "sub_admin"] },
+  { href: "/admin/reservations", label: "予約一覧", icon: ClipboardList, roles: ["super_admin", "staff", "sub_admin"] },
+  { href: "/admin/history", label: "入館履歴", icon: History, roles: ["super_admin", "staff", "sub_admin"] },
   { href: "/admin/dates", label: "利用可能日管理", icon: CalendarDays, roles: ["super_admin"] },
   { href: "/admin/settings", label: "設定", icon: Settings, roles: ["super_admin"] },
 ];
@@ -91,7 +91,7 @@ export function AdminSidebar({ role, name }: { role: AdminRole; name: string }) 
       <div className="border-t border-border/60 p-4">
         <p className="mb-1 truncate text-sm font-medium">{name}</p>
         <p className="mb-3 text-xs text-muted-foreground">
-          {role === "super_admin" ? "スーパー管理者" : "受付担当"}
+          {role === "super_admin" ? "スーパー管理者" : role === "sub_admin" ? "サブ管理者" : "受付担当"}
         </p>
         <Button variant="outline" size="sm" className="w-full" onClick={handleLogout}>
           <LogOut className="h-4 w-4" />

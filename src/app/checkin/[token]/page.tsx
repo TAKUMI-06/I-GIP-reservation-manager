@@ -14,7 +14,7 @@ interface PageProps {
 }
 
 export default async function CheckinTokenPage({ params }: PageProps) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const { token } = await params;
 
   const result = await getReservationByToken(token);
@@ -27,7 +27,11 @@ export default async function CheckinTokenPage({ params }: PageProps) {
         </CardHeader>
         <CardContent>
           {result.success ? (
-            <CheckinPanel reservation={result.reservation} token={token} />
+            <CheckinPanel
+              reservation={result.reservation}
+              token={token}
+              hidePhone={admin.role === "sub_admin"}
+            />
           ) : (
             <Alert variant="danger">
               <ShieldAlert className="h-4 w-4" />
