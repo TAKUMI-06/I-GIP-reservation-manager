@@ -15,11 +15,11 @@ import type { ReservationRow } from "@/lib/types/database";
 export function CheckinPanel({
   reservation,
   token,
-  hidePhone = false,
+  hideContact = false,
 }: {
   reservation: ReservationRow;
   token: string;
-  hidePhone?: boolean;
+  hideContact?: boolean;
 }) {
   const router = useRouter();
   const [current, setCurrent] = React.useState(reservation);
@@ -60,11 +60,11 @@ export function CheckinPanel({
         <dt className="text-muted-foreground">利用日</dt>
         <dd className="col-span-2">{formatJst(current.visit_date, "yyyy年M月d日(E)")}</dd>
 
-        <dt className="text-muted-foreground">メール</dt>
-        <dd className="col-span-2 break-all">{current.email}</dd>
-
-        {!hidePhone && (
+        {!hideContact && (
           <>
+            <dt className="text-muted-foreground">メール</dt>
+            <dd className="col-span-2 break-all">{current.email}</dd>
+
             <dt className="text-muted-foreground">電話番号</dt>
             <dd className="col-span-2">{current.phone}</dd>
           </>

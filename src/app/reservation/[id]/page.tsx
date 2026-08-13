@@ -79,7 +79,7 @@ export default async function ReservationDetailPage({ params }: PageProps) {
                 </dd>
 
                 <dt className="text-muted-foreground">利用時間</dt>
-                <dd className="col-span-2">10:00〜17:00</dd>
+                <dd className="col-span-2">10:30〜17:00</dd>
 
                 <dt className="text-muted-foreground">氏名</dt>
                 <dd className="col-span-2">{reservation.name}</dd>

@@ -30,7 +30,7 @@ export default async function CheckinTokenPage({ params }: PageProps) {
             <CheckinPanel
               reservation={result.reservation}
               token={token}
-              hidePhone={admin.role === "sub_admin"}
+              hideContact={admin.role === "sub_admin"}
             />
           ) : (
             <Alert variant="danger">

@@ -57,7 +57,7 @@ export default async function ReservationsPage({ searchParams }: PageProps) {
         <CardContent className="pt-6">
           <ReservationsTable
             reservations={reservations ?? []}
-            hidePhone={admin?.role === "sub_admin"}
+            hideContact={admin?.role === "sub_admin"}
           />
         </CardContent>
       </Card>

@@ -44,7 +44,7 @@ export default function HomePage() {
               i-GIP 入館管理は、施設の利用予約・QRコード受付・入館履歴の管理をシンプルに行える
               Webサービスです。
             </p>
-            <p className="text-sm font-medium text-muted-foreground">利用時間: 10:00〜17:00</p>
+            <p className="text-sm font-medium text-muted-foreground">利用時間: 10:30〜17:00</p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg">
                 <Link href="/reserve">今すぐ予約する</Link>

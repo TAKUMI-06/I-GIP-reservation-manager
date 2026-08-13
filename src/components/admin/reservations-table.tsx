@@ -7,10 +7,10 @@ import type { ReservationRow } from "@/lib/types/database";
 
 export function ReservationsTable({
   reservations,
-  hidePhone = false,
+  hideContact = false,
 }: {
   reservations: ReservationRow[];
-  hidePhone?: boolean;
+  hideContact?: boolean;
 }) {
   if (reservations.length === 0) {
     return <p className="py-10 text-center text-sm text-muted-foreground">該当する予約がありません。</p>;
@@ -36,8 +36,14 @@ export function ReservationsTable({
             <TableCell className="font-medium">{r.name}</TableCell>
             <TableCell>{r.team_name}</TableCell>
             <TableCell className="text-xs text-muted-foreground">
-              <div>{r.email}</div>
-              {!hidePhone && <div>{r.phone}</div>}
+              {hideContact ? (
+                <span>非公開</span>
+              ) : (
+                <>
+                  <div>{r.email}</div>
+                  <div>{r.phone}</div>
+                </>
+              )}
             </TableCell>
             <TableCell>
               <ReservationStatusBadge status={r.status} />

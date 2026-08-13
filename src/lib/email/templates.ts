@@ -56,7 +56,7 @@ export function buildReservationConfirmationEmail(data: ReservationEmailData): {
     <table role="presentation" width="100%" cellpadding="8" style="background:#f8fafc;border-radius:8px;margin:16px 0;">
       <tr><td style="color:#64748b;width:100px;">予約ID</td><td style="font-weight:600;">${escapeHtml(data.reservationId)}</td></tr>
       <tr><td style="color:#64748b;">利用日</td><td style="font-weight:600;">${escapeHtml(formatJst(data.visitDate, "yyyy年M月d日(E)"))}</td></tr>
-      <tr><td style="color:#64748b;">利用時間</td><td>10:00〜17:00</td></tr>
+      <tr><td style="color:#64748b;">利用時間</td><td>10:30〜17:00</td></tr>
       <tr><td style="color:#64748b;">氏名</td><td>${escapeHtml(data.name)}</td></tr>
       <tr><td style="color:#64748b;">チーム名</td><td>${escapeHtml(data.teamName)}</td></tr>
     </table>
@@ -81,7 +81,7 @@ export function buildReminderEmail(data: ReservationEmailData): { subject: strin
     <p>明日は下記日程でのご来場予定です。準備をお願いいたします。</p>
     <table role="presentation" width="100%" cellpadding="8" style="background:#f8fafc;border-radius:8px;margin:16px 0;">
       <tr><td style="color:#64748b;width:100px;">利用日</td><td style="font-weight:600;">${escapeHtml(formatJst(data.visitDate, "yyyy年M月d日(E)"))}</td></tr>
-      <tr><td style="color:#64748b;">利用時間</td><td>10:00〜17:00</td></tr>
+      <tr><td style="color:#64748b;">利用時間</td><td>10:30〜17:00</td></tr>
       <tr><td style="color:#64748b;">チーム名</td><td>${escapeHtml(data.teamName)}</td></tr>
     </table>
     <p>当日は受付でQRコードをご提示ください。</p>

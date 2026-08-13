@@ -77,7 +77,7 @@ export default async function ReservationCompletePage({ searchParams }: PageProp
                 <CardDescription>
                   {reservation.team_name} / {reservation.name}
                   <br />
-                  利用時間: 10:00〜17:00
+                  利用時間: 10:30〜17:00
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
